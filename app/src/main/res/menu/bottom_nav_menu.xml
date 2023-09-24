@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:title="首页"
+        android:icon="@drawable/home"/>
+    <item
+        android:id="@+id/navigation_category"
+        android:title="分类"
+        android:icon="@drawable/category"/>
+    <item
+        android:id="@+id/navigation_focus"
+        android:title="关注"
+        android:icon="@drawable/focus"/>
+    <item
+        android:id="@+id/navigation_settings"
+        android:title="设置"
+        android:icon="@drawable/mine"/>
+</menu>
