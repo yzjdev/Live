@@ -58,7 +58,6 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) :
             addType<LiveBean>(app.live.droid.R.layout.item_live)
 
             onBind {
-
                 val b = getBinding<ItemLiveBinding>()
                 val screenWidth =
                     resources.displayMetrics.widthPixels / 2 - TypedValue.applyDimension(

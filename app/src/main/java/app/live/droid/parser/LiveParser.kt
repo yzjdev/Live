@@ -9,7 +9,7 @@ abstract class LiveParser : Serializable {
     var name: String? = null
     var className: String? = null
 
-    abstract fun getLives(pageNo: Int): LiveData<Result<List<LiveBean>>>
+    abstract fun getLives(page: Int): LiveData<Result<List<LiveBean>>>
 
     abstract fun getStream(room:String): LiveData<Result<StreamBean>>
 }
