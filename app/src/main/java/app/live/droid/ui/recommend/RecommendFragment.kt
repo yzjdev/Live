@@ -3,10 +3,12 @@ package app.live.droid.ui.recommend
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import app.live.droid.BaseFragment
+import app.live.droid.base.BaseFragment
 import app.live.droid.databinding.FragmentRecommendBinding
 import app.live.droid.databinding.ItemLiveBinding
 import app.live.droid.extensions.loadUrl
@@ -49,10 +51,6 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.refresh.setOnRefreshListener {
-            model.getLives(page)
-            binding.refresh.isRefreshing = false
-        }
         binding.rv.layoutManager = GridLayoutManager(activity, 2)
         binding.rv.setup {
             addType<LiveBean>(app.live.droid.R.layout.item_live)
@@ -86,17 +84,47 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) :
             }
         }.models = mutableListOf()
 
-        model.getLives(page)
-        model.liveLiveData.observe(viewLifecycleOwner, Observer { result ->
-            val lives = result.getOrNull()
-            val a = ArrayList<LiveBean>()
-            if (lives != null) {
-                a.addAll(lives)
-                binding.rv.models = a
-            } else {
+        binding.refresh.onRefresh {
+            postDelayed({
+                Toast.makeText(activity, "$index", Toast.LENGTH_SHORT).show()
+                page = index
+                model.getLives(page)
+                val data = getData()
+                addData(data) {
+                    data[data.lastIndex].hasMore
+                }
+            }, 1000)
 
+        }.autoRefresh()
+
+
+        model.getLives(1)
+        model.liveLiveData.observe(viewLifecycleOwner, Observer { result ->
+            val lives = result.getOrNull() as ArrayList<LiveBean>
+
+            if (page == 1) {
+                model.liveList.clear()
             }
+            model.liveList.addAll(lives)
         })
 
+        binding.search.doAfterTextChanged {
+            val input = it.toString()
+            binding.rv.models = getData().filter { v ->
+                when {
+                    input.isBlank() -> true
+                    else -> v.gameName.contains(input, true) || v.title.contains(
+                        input,
+                        true
+                    ) || v.name.contains(input, true)
+                }
+
+            }
+        }
+
     }
+
+
+    fun getData() = model.liveList
+
 }

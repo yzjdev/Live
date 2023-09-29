@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import app.live.droid.base.BaseActivity
 import app.live.droid.databinding.ActivityPlayBinding
 import app.live.droid.logic.model.LiveBean
 import app.live.droid.parser.LiveParser
@@ -18,7 +18,7 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer
 
 
-class PlayActivity : AppCompatActivity() {
+class PlayActivity : BaseActivity() {
 
     companion object {
         fun actionStart(context: Context, liveParser: LiveParser, liveBean: LiveBean) {

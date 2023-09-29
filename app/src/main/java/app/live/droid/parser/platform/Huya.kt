@@ -1,6 +1,6 @@
 package app.live.droid.parser.platform
 
-import app.live.droid.logic.network.huya.HuyaRepository
+import app.live.droid.logic.network.HuyaRepository
 import app.live.droid.parser.LiveParser
 
 class Huya : LiveParser() {

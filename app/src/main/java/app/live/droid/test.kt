@@ -1,8 +1,11 @@
 package app.live.droid
 
+import app.live.droid.extensions.UA_MOBILE
+import app.live.droid.extensions.UA_NAME
+import app.live.droid.extensions.UA_PC
 import app.live.droid.logic.model.Rate
 import app.live.droid.logic.model.StreamBean
-import app.live.droid.utils.ScriptUtil
+import app.live.droid.utils.ScriptUtils
 import cn.hutool.core.codec.Base64Decoder
 import cn.hutool.core.net.URLDecoder
 import cn.hutool.core.text.UnicodeUtil
@@ -21,7 +24,20 @@ import kotlin.properties.Delegates
 
 
 fun main() {
-    KuaiShou().getRealUrl("https://live.kuaishou.com/u/tianci666")
+    var page = 1
+    var url =
+        "https://live.huya.com/liveHttpUI/getLiveList?iGid=0&iPageSize=120&iPageNo=$page"
+    var json = HttpRequest.get(url).header(UA_NAME, UA_PC).execute().body().replace("\n", " ")
+
+    println(json)
+
+
+    page = 2
+    url =
+        "https://live.huya.com/liveHttpUI/getLiveList?iGid=0&iPageSize=120&iPageNo=$page"
+    json = HttpRequest.get(url).header(UA_NAME, UA_PC).execute().body().replace("\n", " ")
+    println(json)
+
 }
 
 
@@ -188,7 +204,7 @@ class DouYu {
         if (m.find()) result = m.group()
 
         val funcUb9 = result.replace(Regex("eval.*;}"), "strc;}")
-        var res = ScriptUtil.eval(funcUb9, "ub98484234")
+        var res = ScriptUtils.eval(funcUb9, "ub98484234")
         p = Pattern.compile("v=(\\d+)")
         m = p.matcher(res)
         var v = ""
@@ -198,7 +214,7 @@ class DouYu {
         var func_sign = res.replace(Regex("return rt;}\\);?"), "return rt;}")
         func_sign = func_sign.replace("(function (", "function sign(")
         func_sign = func_sign.replace("CryptoJS.MD5(cb).toString()", "\"$rb\"")
-        var params = ScriptUtil.eval(func_sign, "sign", rid, did, t10)
+        var params = ScriptUtils.eval(func_sign, "sign", rid, did, t10)
         params += "&ver=22107261&rid=$rid&rate=-1"
 
         val url = "https://m.douyu.com/api/room/ratestream"

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
-import app.live.droid.BaseFragment
+import app.live.droid.base.BaseFragment
 import app.live.droid.databinding.FragmentFocusBinding
 import app.live.droid.databinding.ItemLiveBinding
 import app.live.droid.logic.model.LiveBean

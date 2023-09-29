@@ -41,18 +41,13 @@ android {
 }
 
 dependencies {
-
+    implementation ("com.google.code.gson:gson:2.10.1")
     implementation("com.alibaba.fastjson2:fastjson2-kotlin:2.0.40")
-    implementation ("com.alibaba.fastjson2:fastjson2:2.0.40")
-
     implementation ("org.mozilla:rhino:1.7.13")
-
-
-    // https://mvnrepository.com/artifact/org.jsoup/jsoup
     implementation("org.jsoup:jsoup:1.16.1")
-
     implementation ("com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-java:v8.4.0-release-jitpack")
     implementation ("com.github.CarGuo.GSYVideoPlayer:GSYVideoPlayer-exo2:v8.4.0-release-jitpack")
+
 //
 //    val media3Version = "1.1.1"
 //    implementation("androidx.media3:media3-exoplayer:$media3Version")
@@ -72,10 +67,10 @@ dependencies {
 
     implementation("com.github.liangjingkanji:BRV:1.5.0")
 
-    val retrofitVersion = "2.6.1"
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-scalars:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+//    val retrofitVersion = "2.6.1"
+//    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+//    implementation("com.squareup.retrofit2:converter-scalars:$retrofitVersion")
+//    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")

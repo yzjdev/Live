@@ -3,7 +3,7 @@ package app.live.droid.ui.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.FragmentActivity
-import app.live.droid.BaseFragment
+import app.live.droid.base.BaseFragment
 import app.live.droid.databinding.FragmentHomeBinding
 import app.live.droid.ui.recommend.RecommendFragment
 import app.live.droid.utils.LiveHelper
