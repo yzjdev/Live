@@ -15,7 +15,7 @@ import com.alibaba.fastjson2.parseObject
 import com.alibaba.fastjson2.toJSONString
 import kotlinx.coroutines.Dispatchers
 
-object KuaishouRepository {
+object KuaishouNetwork {
 
     fun getStream(room: String) = liveData(Dispatchers.IO) {
         var stream: StreamBean? = null

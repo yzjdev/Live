@@ -19,7 +19,8 @@ import com.alibaba.fastjson2.toJSONString
 import kotlinx.coroutines.Dispatchers
 import java.util.regex.Pattern
 
-object HuyaRepository {
+
+object HuyaNetwork {
 
     fun getStream(room: String) = liveData(Dispatchers.IO) {
         var stream: StreamBean? = null
@@ -33,14 +34,11 @@ object HuyaRepository {
         emit(result)
     }
 
-
     fun getLives(page: Int) = liveData(Dispatchers.IO) {
-        val list = ArrayList<LiveBean>()
         val result = try {
-            val url =
-                "https://live.huya.com/liveHttpUI/getLiveList?iGid=0&iPageSize=120&iPageNo=$page"
+            val list = ArrayList<LiveBean>()
+            val url = "https://live.huya.com/liveHttpUI/getLiveList?iGid=0&iPageSize=120&iPageNo=$page"
             val json = HttpRequest.get(url).header(UA_NAME, UA_PC).execute().body()
-
             val hasMore = JSON.parseObject(json).run {
                 val a = getIntValue("iPageNo")
                 val b = getIntValue("iTotalPage")
@@ -61,18 +59,7 @@ object HuyaRepository {
                     val avatar = getString("sAvatar180")
                     val coverUrl = getString("sScreenshot")
                     list.add(
-                        LiveBean(
-                            roomId,
-                            roomUrl,
-                            name,
-                            title,
-                            gameName,
-                            num,
-                            avatar,
-                            coverUrl,
-                            null,
-                            hasMore
-                        )
+                        LiveBean(roomId, roomUrl, name, title, gameName, num, avatar, coverUrl, null, hasMore)
                     )
                 }
             }

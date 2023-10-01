@@ -2,10 +2,10 @@ package app.live.droid.logic.network
 
 import android.util.Log
 import androidx.lifecycle.liveData
+import app.live.droid.extensions.TAG
 import app.live.droid.extensions.UA_MOBILE
 import app.live.droid.extensions.UA_NAME
 import app.live.droid.extensions.UA_PC
-import app.live.droid.extensions.TAG
 import app.live.droid.logic.model.LiveBean
 import app.live.droid.logic.model.Rate
 import app.live.droid.logic.model.StreamBean
@@ -23,7 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import java.util.regex.Pattern
 import kotlin.properties.Delegates
 
-object DouyuRepository {
+object DouyuNetwork {
 
     fun getStream(room: String) = liveData(Dispatchers.IO) {
         var stream: StreamBean? = null

@@ -27,6 +27,7 @@ class FocusFragment : BaseFragment<FragmentFocusBinding, FocusViewModel>() {
         binding.rv.layoutManager = GridLayoutManager(activity, 2)
         binding.rv.setup {
 
+
             addType<LiveBean>(app.live.droid.R.layout.item_live)
 
             onBind {

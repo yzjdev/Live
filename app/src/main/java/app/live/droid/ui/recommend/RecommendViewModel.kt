@@ -13,7 +13,7 @@ class RecommendViewModel(parser: LiveParser): ViewModel() {
 
     var liveList = ArrayList<LiveBean>()
 
-    val liveLiveData = pageLiveData.switchMap { pageNo -> parser.getLives(pageNo) }
+    val liveLiveData = pageLiveData.switchMap { page -> parser.getLives(page) }
 
 
     fun getLives(pageNo:Int){

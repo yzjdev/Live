@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -19,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="#DF7C7C"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -32,66 +31,47 @@
                 android:paddingBottom="4dp">
 
                 <TextView
+                    android:layout_centerVertical="true"
                     android:id="@+id/game"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_marginStart="6dp"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
-                <RelativeLayout
+                <LinearLayout
+                    android:layout_marginEnd="6dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true">
 
                     <ImageView
+                        android:layout_marginEnd="4dp"
                         android:id="@+id/peopleIcon"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="8dp"
-                        android:layout_toStartOf="@id/num"
-                        android:src="@drawable/people_icon" />
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/round_person_24" />
 
                     <TextView
                         android:id="@+id/num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
                         android:singleLine="true"
                         android:textColor="@color/white"
-
                         android:textSize="12sp" />
-                </RelativeLayout>
-
+                </LinearLayout>
             </RelativeLayout>
-
         </RelativeLayout>
-
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/coverContainer"
-            android:ellipsize="end"
-            android:paddingLeft="8dp"
-            android:paddingTop="4dp"
-            android:paddingRight="8dp"
-            android:singleLine="true"
-            android:textSize="13sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/title"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_below="@id/coverContainer"
+            android:layout_margin="8dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/avatar"
@@ -100,19 +80,30 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="8dp" />
 
-            <TextView
-                android:id="@+id/room"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/avatar"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:textSize="12sp" />
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/room"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textSize="12sp" />
 
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
         </RelativeLayout>
-
     </RelativeLayout>
-
 </androidx.cardview.widget.CardView>

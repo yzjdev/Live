@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import app.live.droid.base.BaseActivity
-import app.live.droid.databinding.ActivityPlayBinding
+import app.live.droid.databinding.ActivityPlayerBinding
 import app.live.droid.logic.model.LiveBean
 import app.live.droid.parser.LiveParser
 import com.shuyu.gsyvideoplayer.GSYVideoManager
@@ -18,11 +18,11 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer
 
 
-class PlayActivity : BaseActivity() {
+class PlayerActivity : BaseActivity() {
 
     companion object {
         fun actionStart(context: Context, liveParser: LiveParser, liveBean: LiveBean) {
-            val intent = Intent(context, PlayActivity::class.java)
+            val intent = Intent(context, PlayerActivity::class.java)
             intent.putExtra("parser", liveParser)
             intent.putExtra("data", liveBean)
             context.startActivity(intent)
@@ -33,7 +33,7 @@ class PlayActivity : BaseActivity() {
     lateinit var data: LiveBean
 
     lateinit var viewModel: PlayerViewModel
-    lateinit var binding: ActivityPlayBinding
+    lateinit var binding: ActivityPlayerBinding
 
     lateinit var currentUrl: String
 
@@ -49,7 +49,7 @@ class PlayActivity : BaseActivity() {
     @androidx.media3.common.util.UnstableApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPlayBinding.inflate(layoutInflater)
+        binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
@@ -59,17 +59,14 @@ class PlayActivity : BaseActivity() {
 
         viewModel = ViewModelProvider(this, PlayerViewModelFatory(parser))[PlayerViewModel::class.java]
 
-
         initPlayer()
 
         viewModel.getStream(data.roomId)
         viewModel.streamLiveData.observe(this, Observer { result ->
             val stream = result.getOrNull()!!
-
             viewModel.stream = stream
             data.stream = stream
             startPlay(stream.urls[0])
-            binding.text.text = stream.toString()
         })
 
     }

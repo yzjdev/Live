@@ -11,13 +11,11 @@ import com.shuyu.gsyvideoplayer.player.PlayerFactory
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType
 import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
 
-class App :Application() {
+class App : Application() {
     companion object {
         @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
-
     }
-
 
     override fun onCreate() {
         super.onCreate()
@@ -26,12 +24,9 @@ class App :Application() {
 
         PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_16_9)
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
-            MaterialHeader(context)
-        }
-        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
-            ClassicsFooter(context)
-        }
+
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, _ -> MaterialHeader(context) }
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ -> ClassicsFooter(context) }
 
     }
 }

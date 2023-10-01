@@ -3,7 +3,6 @@ package app.live.droid.ui.recommend
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
-import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,7 +13,8 @@ import app.live.droid.databinding.ItemLiveBinding
 import app.live.droid.extensions.loadUrl
 import app.live.droid.logic.model.LiveBean
 import app.live.droid.parser.LiveParser
-import app.live.droid.ui.player.PlayActivity
+import app.live.droid.ui.player.PlayerActivity
+import com.drake.brv.utils.addModels
 import com.drake.brv.utils.models
 import com.drake.brv.utils.setup
 import kotlin.reflect.KClass
@@ -40,7 +40,7 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) :
         return RecommendViewModel::class
     }
 
-    override fun getViewBindingClass(): Class<FragmentRecommendBinding> {
+    override fun getViewBindingClass(): Class<app.live.droid.databinding.FragmentRecommendBinding> {
         return FragmentRecommendBinding::class.java
     }
 
@@ -57,12 +57,7 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) :
 
             onBind {
                 val b = getBinding<ItemLiveBinding>()
-                val screenWidth =
-                    resources.displayMetrics.widthPixels / 2 - TypedValue.applyDimension(
-                        TypedValue.COMPLEX_UNIT_DIP,
-                        16f,
-                        resources.displayMetrics
-                    )
+                val screenWidth = resources.displayMetrics.widthPixels / 2 - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
                 val targetHeight = screenWidth * 95 / 169f
                 b.preview.layoutParams.height = targetHeight.toInt()
 
@@ -76,55 +71,41 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) :
                     num.text = data.num
                 }
 
-                itemView.setOnClickListener {
-                    PlayActivity.actionStart(requireContext(), liveParser!!, data)
-                }
-
-
+                itemView.setOnClickListener { PlayerActivity.actionStart(requireContext(), liveParser!!, data) }
             }
-        }.models = mutableListOf()
+        }
 
-        binding.refresh.onRefresh {
-            postDelayed({
-                Toast.makeText(activity, "$index", Toast.LENGTH_SHORT).show()
-                page = index
-                model.getLives(page)
-                val data = getData()
-                addData(data) {
-                    data[data.lastIndex].hasMore
-                }
-            }, 1000)
-
-        }.autoRefresh()
-
-
-        model.getLives(1)
-        model.liveLiveData.observe(viewLifecycleOwner, Observer { result ->
-            val lives = result.getOrNull() as ArrayList<LiveBean>
-
-            if (page == 1) {
-                model.liveList.clear()
-            }
-            model.liveList.addAll(lives)
-        })
 
         binding.search.doAfterTextChanged {
             val input = it.toString()
-            binding.rv.models = getData().filter { v ->
+            binding.rv.models = model.liveList.filter { v ->
                 when {
                     input.isBlank() -> true
-                    else -> v.gameName.contains(input, true) || v.title.contains(
-                        input,
-                        true
-                    ) || v.name.contains(input, true)
+                    else -> v.gameName.contains(input, true) ||
+                            v.title.contains(input, true) ||
+                            v.name.contains(input, true)
                 }
 
             }
         }
 
+        binding.fab.setOnClickListener {
+            page++
+            model.getLives(page)
+        }
+
+        model.getLives(1)
+        model.liveLiveData.observe(viewLifecycleOwner, Observer { result ->
+            val lives = result.getOrNull()
+            if (lives != null) {
+                model.liveList.addAll(lives)
+                binding.rv.addModels(lives)
+                binding.search.hint = "第${page}页 正在直播 ${binding.rv.models?.size}"
+            }
+        })
+
+
     }
 
-
-    fun getData() = model.liveList
 
 }

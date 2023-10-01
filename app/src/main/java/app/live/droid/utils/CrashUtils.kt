@@ -28,6 +28,7 @@ object CrashUtils : Thread.UncaughtExceptionHandler {
            CrashActivity.actionStart(context, carshInfo )
             ActivityUtils.finishAll()
             Process.killProcess(Process.myPid())
+            System.exit(0)
         }
     }
 
