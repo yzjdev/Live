@@ -7,6 +7,7 @@ import app.live.droid.base.BaseFragment
 import app.live.droid.databinding.FragmentHomeBinding
 import app.live.droid.ui.recommend.RecommendFragment
 import app.live.droid.utils.LiveHelper
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
@@ -29,8 +30,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             tab.text = list[position].name
         }.attach()
 
-    }
 
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val f = fragments[tab?.position!!] as RecommendFragment
+                f.re()
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+        })
+
+
+    }
 
 
 }

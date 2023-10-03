@@ -1,20 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.home.HomeFragment"
-    android:orientation="vertical">
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        app:tabMode="scrollable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    tools:context=".ui.home.HomeFragment">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:background="@color/white"
+        android:fitsSystemWindows="true"
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.search.SearchBar
+            android:background="@color/white"
+            android:id="@+id/openSearchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.tabs.TabLayout
+            android:background="@color/white"
+            android:id="@+id/tabLayout"
+            app:tabMode="scrollable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    
+    <com.google.android.material.search.SearchView
+        android:id="@+id/searchView"
+        app:layout_anchor="@id/openSearchBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.google.android.material.search.SearchView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

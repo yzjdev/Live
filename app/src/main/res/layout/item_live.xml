@@ -17,7 +17,6 @@
                 android:id="@+id/preview"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:background="#DF7C7C"
                 android:scaleType="centerCrop" />
 
             <RelativeLayout

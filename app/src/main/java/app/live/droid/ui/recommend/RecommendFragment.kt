@@ -1,12 +1,13 @@
 package app.live.droid.ui.recommend
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
-import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import app.live.droid.MainActivity
 import app.live.droid.base.BaseFragment
 import app.live.droid.databinding.FragmentRecommendBinding
 import app.live.droid.databinding.ItemLiveBinding
@@ -17,7 +18,6 @@ import app.live.droid.ui.player.PlayerActivity
 import com.drake.brv.utils.addModels
 import com.drake.brv.utils.models
 import com.drake.brv.utils.setup
-import kotlin.reflect.KClass
 
 
 class RecommendFragment constructor(private val liveParser: LiveParser?) :
@@ -29,30 +29,50 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) :
         flag = true
     }
 
-    override fun getViewModel(): RecommendViewModel {
-        return ViewModelProvider(
-            this,
-            RecommendViewModelFactory(liveParser!!)
-        )[RecommendViewModel::class.java]
-    }
-
-    override fun getViewModelClass(): KClass<RecommendViewModel> {
-        return RecommendViewModel::class
-    }
-
-    override fun getViewBindingClass(): Class<app.live.droid.databinding.FragmentRecommendBinding> {
-        return FragmentRecommendBinding::class.java
-    }
-
+    override fun getViewModel() = ViewModelProvider(this, RecommendViewModelFactory(liveParser!!))[RecommendViewModel::class.java]
+    override fun getViewModelClass() = RecommendViewModel::class
+    override fun getViewBindingClass() = FragmentRecommendBinding::class.java
     override fun initData() {
         super.initData()
     }
 
+
+    val map = mutableMapOf<LiveParser, String>()
+
+    @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        bindRv()
+
+        binding.fab.setOnClickListener {
+            page++
+            model.getLives(page)
+        }
+
+        model.getLives(1)
+        model.liveLiveData.observe(viewLifecycleOwner, Observer { result ->
+            val lives = result.getOrNull()
+            if (lives != null) {
+                if (page == 1) {
+                    model.liveList.clear()
+                }
+                model.liveList.addAll(lives)
+                binding.rv.addModels(lives)
+
+                val hint = "正在直播 ${binding.rv.models?.size}"
+                map[liveParser!!] = hint
+
+                re()
+            }
+        })
+    }
+
+
+    fun bindRv() {
         binding.rv.layoutManager = GridLayoutManager(activity, 2)
         binding.rv.setup {
+
             addType<LiveBean>(app.live.droid.R.layout.item_live)
 
             onBind {
@@ -74,38 +94,23 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) :
                 itemView.setOnClickListener { PlayerActivity.actionStart(requireContext(), liveParser!!, data) }
             }
         }
-
-
-        binding.search.doAfterTextChanged {
-            val input = it.toString()
-            binding.rv.models = model.liveList.filter { v ->
-                when {
-                    input.isBlank() -> true
-                    else -> v.gameName.contains(input, true) ||
-                            v.title.contains(input, true) ||
-                            v.name.contains(input, true)
-                }
-
-            }
-        }
-
-        binding.fab.setOnClickListener {
-            page++
-            model.getLives(page)
-        }
-
-        model.getLives(1)
-        model.liveLiveData.observe(viewLifecycleOwner, Observer { result ->
-            val lives = result.getOrNull()
-            if (lives != null) {
-                model.liveList.addAll(lives)
-                binding.rv.addModels(lives)
-                binding.search.hint = "第${page}页 正在直播 ${binding.rv.models?.size}"
-            }
-        })
-
-
     }
 
+    fun re() {
+        val searchBar = (activity as MainActivity).getSearchBar()
+        searchBar.hint = map[liveParser]
+    }
+
+    fun query(query: String) {
+        binding.rv.models = model.liveList.filter { v ->
+            when {
+                query.isBlank() -> true
+                else -> v.gameName.contains(query, true) ||
+                        v.title.contains(query, true) ||
+                        v.name.contains(query, true)
+            }
+
+        }
+    }
 
 }

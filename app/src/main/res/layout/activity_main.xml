@@ -9,11 +9,11 @@
     tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:layout_weight="1"
         android:id="@+id/main_nav_host"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="1"
         app:defaultNavHost="false"
         app:navGraph="@navigation/live_navigation" />
 
@@ -22,6 +22,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bottom_nav_menu"
-        />
+        app:menu="@menu/bottom_nav_menu" />
 </LinearLayout>
