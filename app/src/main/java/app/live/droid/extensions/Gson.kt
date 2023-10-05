@@ -8,8 +8,7 @@ import com.google.gson.reflect.TypeToken
 
 val type = object : TypeToken<MutableList<LiveParser>>() {}.type
 
-fun Gson.create() =
-    GsonBuilder().registerTypeAdapter(LiveParser::class.java, LiveTypeAdapter()).create()
+fun Gson.create() = GsonBuilder().registerTypeAdapter(LiveParser::class.java, LiveTypeAdapter()).create()
 
 fun Gson.toLiveJson(src: Any) = toJson(src, type)
 

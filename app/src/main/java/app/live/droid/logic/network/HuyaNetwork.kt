@@ -35,6 +35,7 @@ object HuyaNetwork {
     }
 
     fun getLives(page: Int) = liveData(Dispatchers.IO) {
+
         val result = try {
             val list = ArrayList<LiveBean>()
             val url = "https://live.huya.com/liveHttpUI/getLiveList?iGid=0&iPageSize=120&iPageNo=$page"

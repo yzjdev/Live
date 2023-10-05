@@ -1,4 +1,4 @@
-package app.live.droid.component
+package app.live.droid.components
 
 import android.app.Activity
 import android.content.Context

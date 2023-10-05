@@ -1,27 +1,41 @@
 package app.live.droid.ui.recommend
 
-import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import app.live.droid.MainActivity
+import androidx.recyclerview.widget.RecyclerView
+import app.live.droid.R
 import app.live.droid.base.BaseFragment
 import app.live.droid.databinding.FragmentRecommendBinding
 import app.live.droid.databinding.ItemLiveBinding
+import app.live.droid.extensions.gson
 import app.live.droid.extensions.loadUrl
 import app.live.droid.logic.model.LiveBean
 import app.live.droid.parser.LiveParser
+import app.live.droid.parser.platform.Douyu
+import app.live.droid.parser.platform.Huya
+import app.live.droid.parser.platform.Kuaishou
 import app.live.droid.ui.player.PlayerActivity
+import com.alibaba.fastjson2.JSON
 import com.drake.brv.utils.addModels
 import com.drake.brv.utils.models
 import com.drake.brv.utils.setup
+import com.google.gson.reflect.TypeToken
+import kotlin.math.abs
 
 
-class RecommendFragment constructor(private val liveParser: LiveParser?) :
-    BaseFragment<FragmentRecommendBinding, RecommendViewModel>() {
+class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseFragment<FragmentRecommendBinding, RecommendViewModel>() {
+
+    private val routeName = when (liveParser) {
+        is Huya -> "huya"
+        is Douyu -> "douyu"
+        is Kuaishou -> "kuaishou"
+        else -> ""
+    }
 
     private var page = 1
 
@@ -36,21 +50,15 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) :
         super.initData()
     }
 
-
     val map = mutableMapOf<LiveParser, String>()
 
-    @SuppressLint("RestrictedApi")
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         bindRv()
-
-        binding.fab.setOnClickListener {
-            page++
-            model.getLives(page)
-        }
-
-        model.getLives(1)
+        
+        //   model.getLives(1)
         model.liveLiveData.observe(viewLifecycleOwner, Observer { result ->
             val lives = result.getOrNull()
             if (lives != null) {
@@ -63,13 +71,20 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) :
                 val hint = "正在直播 ${binding.rv.models?.size}"
                 map[liveParser!!] = hint
 
-                re()
+                val json = JSON.toJSONString(lives)
+                activity?.apply {
+                    val editor = getSharedPreferences(routeName, Context.MODE_PRIVATE).edit()
+                    editor.putString("$page", json)
+                    editor.apply()
+                }
             }
         })
     }
 
 
+    val scrollOffset = 4
     fun bindRv() {
+        binding.rv.setHasFixedSize(true)
         binding.rv.layoutManager = GridLayoutManager(activity, 2)
         binding.rv.setup {
 
@@ -94,11 +109,58 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) :
                 itemView.setOnClickListener { PlayerActivity.actionStart(requireContext(), liveParser!!, data) }
             }
         }
+
+        val fab =binding.fab
+
+        fab.setOnClickListener {
+            val rv = activity?.findViewById<RecyclerView>(R.id.rv)
+            rv?.scrollToPosition(0)
+            fab.hide()
+        }
+        fab.hide()
+
+        binding.rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (abs(dy) > scrollOffset) {
+                    if (dy < 0) {
+                        fab.hide()
+                    } else {
+                        fab.show()
+                    }
+                }
+            }
+        })
+
+
+        binding.refresh.onRefresh {
+            page = index
+            model.getLives(page)
+            val data = getData(page)
+            addData(data) {
+                true
+            }
+
+        }.autoRefresh()
     }
 
-    fun re() {
-        val searchBar = (activity as MainActivity).getSearchBar()
-        searchBar.hint = map[liveParser]
+    fun clearCache() {
+        activity?.apply {
+            getSharedPreferences(routeName, Context.MODE_PRIVATE).edit().clear().apply()
+        }
+    }
+
+    fun getData(page: Int): List<LiveBean> {
+        activity?.apply {
+            getSharedPreferences(routeName, Context.MODE_PRIVATE).apply {
+                val json = getString("$page", "")
+                val l = gson.fromJson<List<LiveBean>>(json, object : TypeToken<MutableList<LiveBean>>() {}.type)
+                if (!l.isNullOrEmpty()) {
+                    return l
+                }
+            }
+        }
+        return mutableListOf()
     }
 
     fun query(query: String) {

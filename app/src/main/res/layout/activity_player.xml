@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.player.PlayerActivity">
 
-    <app.live.droid.component.PlayerView
+    <app.live.droid.components.PlayerView
         android:id="@+id/playerView"
         android:layout_width="match_parent"
         android:layout_height="220dp" />

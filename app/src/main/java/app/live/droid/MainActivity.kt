@@ -5,8 +5,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import app.live.droid.base.BaseActivity
 import app.live.droid.databinding.ActivityMainBinding
-import com.google.android.material.search.SearchBar
-import com.google.android.material.search.SearchView
 
 class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -22,19 +20,5 @@ class MainActivity : BaseActivity() {
         navView.setupWithNavController(navController)
     }
 
-
-    override fun onBackPressed() {
-        findViewById<SearchView>(R.id.searchView).apply {
-            if (isShowing){
-                hide()
-                return
-            }
-        }
-        super.onBackPressed()
-    }
-
-    fun getSearchView() = findViewById<SearchView>(R.id.searchView)
-
-    fun getSearchBar() = findViewById<SearchBar>(R.id.openSearchBar)
 
 }
