@@ -41,6 +41,8 @@ android {
 
 dependencies {
 
+    implementation("io.github.scwang90:refresh-header-classics:2.0.5")
+
     implementation("com.github.clans:fab:1.6.4")
     
     implementation ("com.google.code.gson:gson:2.10.1")

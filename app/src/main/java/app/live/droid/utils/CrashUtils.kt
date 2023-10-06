@@ -2,8 +2,11 @@ package app.live.droid.utils
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Process
+import android.widget.HorizontalScrollView
+import android.widget.ScrollView
 import android.widget.TextView
 import app.live.droid.base.BaseActivity
 import app.live.droid.extensions.context
@@ -56,8 +59,18 @@ object CrashUtils : Thread.UncaughtExceptionHandler {
     class CrashActivity : BaseActivity(){
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
+
+            val scrollView = ScrollView(this).apply { isFillViewport = true }
+            val hsv = HorizontalScrollView(this).apply { isFillViewport = true }
             val text = TextView(this)
-            setContentView(text)
+
+
+            hsv.addView(text,-1,-1)
+            scrollView.addView(hsv,-1,-1)
+            setContentView(scrollView)
+
+            text.setTypeface(Typeface.MONOSPACE)
+            text.textSize = 18f
             val info = intent.getStringExtra("info")
             text.text = info
         }

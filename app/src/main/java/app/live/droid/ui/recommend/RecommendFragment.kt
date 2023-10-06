@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,6 +22,7 @@ import app.live.droid.parser.platform.Huya
 import app.live.droid.parser.platform.Kuaishou
 import app.live.droid.ui.player.PlayerActivity
 import com.alibaba.fastjson2.JSON
+import com.drake.brv.PageRefreshLayout
 import com.drake.brv.utils.addModels
 import com.drake.brv.utils.models
 import com.drake.brv.utils.setup
@@ -52,22 +54,20 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseF
 
     val map = mutableMapOf<LiveParser, String>()
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         bindRv()
-        
-        //   model.getLives(1)
+        binding.forceRefresh.setOnClickListener { refresh() }
         model.liveLiveData.observe(viewLifecycleOwner, Observer { result ->
             val lives = result.getOrNull()
             if (lives != null) {
                 if (page == 1) {
                     model.liveList.clear()
+                    binding.rv.models = lives
+                } else {
+                    binding.rv.addModels(lives)
                 }
                 model.liveList.addAll(lives)
-                binding.rv.addModels(lives)
-
                 val hint = "正在直播 ${binding.rv.models?.size}"
                 map[liveParser!!] = hint
 
@@ -81,15 +81,12 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseF
         })
     }
 
-
     val scrollOffset = 4
-    fun bindRv() {
+    private fun bindRv() {
         binding.rv.setHasFixedSize(true)
         binding.rv.layoutManager = GridLayoutManager(activity, 2)
         binding.rv.setup {
-
             addType<LiveBean>(app.live.droid.R.layout.item_live)
-
             onBind {
                 val b = getBinding<ItemLiveBinding>()
                 val screenWidth = resources.displayMetrics.widthPixels / 2 - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
@@ -110,7 +107,13 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseF
             }
         }
 
-        val fab =binding.fab
+        val fab = binding.fab
+        val searchContainer = binding.searchContainer
+
+        binding.search.doAfterTextChanged {
+            val s = it.toString()
+            query(s)
+        }
 
         fab.setOnClickListener {
             val rv = activity?.findViewById<RecyclerView>(R.id.rv)
@@ -118,6 +121,7 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseF
             fab.hide()
         }
         fab.hide()
+
 
         binding.rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -132,24 +136,25 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseF
             }
         })
 
-
-        binding.refresh.onRefresh {
+        binding.page.onRefresh {
             page = index
             model.getLives(page)
             val data = getData(page)
             addData(data) {
                 true
             }
-
         }.autoRefresh()
     }
-
-    fun clearCache() {
+    private fun refresh() {
+        clearCache()
+        PageRefreshLayout.startIndex = 1
+        binding.page.autoRefresh()
+    }
+    private fun clearCache() {
         activity?.apply {
             getSharedPreferences(routeName, Context.MODE_PRIVATE).edit().clear().apply()
         }
     }
-
     fun getData(page: Int): List<LiveBean> {
         activity?.apply {
             getSharedPreferences(routeName, Context.MODE_PRIVATE).apply {

@@ -16,8 +16,8 @@ class RecommendViewModel(parser: LiveParser): ViewModel() {
     val liveLiveData = pageLiveData.switchMap { page -> parser.getLives(page) }
 
 
-    fun getLives(pageNo:Int){
-        pageLiveData.value = pageNo
+    fun getLives(page:Int){
+        pageLiveData.value = page
     }
 
 }

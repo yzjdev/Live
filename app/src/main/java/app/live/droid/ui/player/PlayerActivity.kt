@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import app.live.droid.base.BaseActivity
 import app.live.droid.databinding.ActivityPlayerBinding
+import app.live.droid.extensions.toast
 import app.live.droid.logic.model.LiveBean
 import app.live.droid.parser.LiveParser
 import com.shuyu.gsyvideoplayer.GSYVideoManager
@@ -66,7 +67,12 @@ class PlayerActivity : BaseActivity() {
             val stream = result.getOrNull()!!
             viewModel.stream = stream
             data.stream = stream
-            startPlay(stream.urls[0])
+            if (stream.urls.isNotEmpty()){
+                startPlay(stream.urls[0])
+            }else{
+                "播放地址出错".toast()
+            }
+
         })
 
     }
