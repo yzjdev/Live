@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import app.live.droid.base.BaseActivity
 import app.live.droid.databinding.ActivityPlayerBinding
 import app.live.droid.extensions.toast
@@ -19,7 +18,7 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer
 
 
-class PlayerActivity : BaseActivity() {
+class PlayerActivity : BaseActivity<ActivityPlayerBinding, PlayerViewModel>(true) {
 
     companion object {
         fun actionStart(context: Context, liveParser: LiveParser, liveBean: LiveBean) {
@@ -33,11 +32,7 @@ class PlayerActivity : BaseActivity() {
     lateinit var parser: LiveParser
     lateinit var data: LiveBean
 
-    lateinit var viewModel: PlayerViewModel
-    lateinit var binding: ActivityPlayerBinding
-
     lateinit var currentUrl: String
-
 
     lateinit var playerView: StandardGSYVideoPlayer
 
@@ -46,19 +41,17 @@ class PlayerActivity : BaseActivity() {
     var isPlay = false
     var isPause = true
 
+    override fun createCustomViewModelIfNeed() = PlayerViewModelFatory(parser)
 
-    @androidx.media3.common.util.UnstableApi
+    override fun createViewModelClass() = PlayerViewModel::class.java
+
+    override fun createViewBinding() = ActivityPlayerBinding.inflate(layoutInflater)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPlayerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-
 
         parser = intent.getSerializableExtra("parser") as LiveParser
         data = intent.getSerializableExtra("data") as LiveBean
-
-        viewModel = ViewModelProvider(this, PlayerViewModelFatory(parser))[PlayerViewModel::class.java]
 
         initPlayer()
 
@@ -72,9 +65,7 @@ class PlayerActivity : BaseActivity() {
             }else{
                 "播放地址出错".toast()
             }
-
         })
-
     }
 
     fun initPlayer() {
@@ -106,24 +97,19 @@ class PlayerActivity : BaseActivity() {
         }
     }
 
-
     fun startPlay(url: String) {
         currentUrl = url
         playerView.setUp(url, false, data.title)
         playerView.startPlayLogic()
     }
 
-
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-
-
         // ------- ！！！如果不需要旋转屏幕，可以不调用！！！-------
         // 不需要屏幕旋转，还需要设置 setNeedOrientationUtils(false)
         if (orientationUtils != null) {
             orientationUtils.backToProtVideo()
         }
-
         if (GSYVideoManager.backFromWindowFull(this)) {
             return
         }

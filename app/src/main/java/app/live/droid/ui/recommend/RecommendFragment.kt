@@ -3,10 +3,11 @@ package app.live.droid.ui.recommend
 import android.content.Context
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.live.droid.R
@@ -23,14 +24,13 @@ import app.live.droid.parser.platform.Kuaishou
 import app.live.droid.ui.player.PlayerActivity
 import com.alibaba.fastjson2.JSON
 import com.drake.brv.PageRefreshLayout
-import com.drake.brv.utils.addModels
 import com.drake.brv.utils.models
 import com.drake.brv.utils.setup
 import com.google.gson.reflect.TypeToken
 import kotlin.math.abs
 
 
-class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseFragment<FragmentRecommendBinding, RecommendViewModel>() {
+class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseFragment<FragmentRecommendBinding, RecommendViewModel>(true) {
 
     private val routeName = when (liveParser) {
         is Huya -> "huya"
@@ -41,33 +41,25 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseF
 
     private var page = 1
 
-    init {
-        flag = true
-    }
-
-    override fun getViewModel() = ViewModelProvider(this, RecommendViewModelFactory(liveParser!!))[RecommendViewModel::class.java]
-    override fun getViewModelClass() = RecommendViewModel::class
-    override fun getViewBindingClass() = FragmentRecommendBinding::class.java
-    override fun initData() {
-        super.initData()
-    }
+    val mapName = "${routeName}_$page"
 
     val map = mutableMapOf<LiveParser, String>()
+
+    override fun createCustomViewModelIfNeed() = RecommendViewModelFactory(liveParser!!)
+
+    override fun createViewModelClass() = RecommendViewModel::class.java
+
+    override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentRecommendBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindRv()
         binding.forceRefresh.setOnClickListener { refresh() }
-        model.liveLiveData.observe(viewLifecycleOwner, Observer { result ->
+
+        viewModel.liveLiveData.observe(viewLifecycleOwner, Observer { result ->
             val lives = result.getOrNull()
             if (lives != null) {
-                if (page == 1) {
-                    model.liveList.clear()
-                    binding.rv.models = lives
-                } else {
-                    binding.rv.addModels(lives)
-                }
-                model.liveList.addAll(lives)
+                viewModel.liveListMap[mapName] = lives
                 val hint = "正在直播 ${binding.rv.models?.size}"
                 map[liveParser!!] = hint
 
@@ -108,7 +100,6 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseF
         }
 
         val fab = binding.fab
-        val searchContainer = binding.searchContainer
 
         binding.search.doAfterTextChanged {
             val s = it.toString()
@@ -138,23 +129,27 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseF
 
         binding.page.onRefresh {
             page = index
-            model.getLives(page)
             val data = getData(page)
             addData(data) {
-                true
+                data.isNotEmpty()
             }
+
         }.autoRefresh()
+
     }
+
     private fun refresh() {
         clearCache()
         PageRefreshLayout.startIndex = 1
         binding.page.autoRefresh()
     }
+
     private fun clearCache() {
         activity?.apply {
             getSharedPreferences(routeName, Context.MODE_PRIVATE).edit().clear().apply()
         }
     }
+
     fun getData(page: Int): List<LiveBean> {
         activity?.apply {
             getSharedPreferences(routeName, Context.MODE_PRIVATE).apply {
@@ -165,19 +160,22 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseF
                 }
             }
         }
+
         return mutableListOf()
     }
 
     fun query(query: String) {
-        binding.rv.models = model.liveList.filter { v ->
-            when {
-                query.isBlank() -> true
-                else -> v.gameName.contains(query, true) ||
-                        v.title.contains(query, true) ||
-                        v.name.contains(query, true)
-            }
-
-        }
+//
+//        binding.rv.models =list.filter {
+//            val v = it as LiveBean
+//            when {
+//                query.isBlank() -> true
+//                else -> v.gameName.contains(query, true) ||
+//                        v.title.contains(query, true) ||
+//                        v.name.contains(query, true)
+//            }
+//
+//        }
     }
 
 }

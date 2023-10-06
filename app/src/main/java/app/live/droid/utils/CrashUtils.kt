@@ -1,5 +1,6 @@
 package app.live.droid.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -8,7 +9,6 @@ import android.os.Process
 import android.widget.HorizontalScrollView
 import android.widget.ScrollView
 import android.widget.TextView
-import app.live.droid.base.BaseActivity
 import app.live.droid.extensions.context
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -54,9 +54,7 @@ object CrashUtils : Thread.UncaughtExceptionHandler {
         return writer.toString()
     }
 
-
-
-    class CrashActivity : BaseActivity(){
+    class CrashActivity : Activity(){
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
 

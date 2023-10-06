@@ -5,42 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.createViewModelLazy
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import kotlin.reflect.KClass
 
-abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
+abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(val customViewModel: Boolean = false) : Fragment() {
 
-    var flag = false
-    protected val model by lazy {
-        if (flag) {
-            getViewModel()!!
-        } else
-            createViewModelLazy(getViewModelClass(), { viewModelStore }).value
-    }
+    protected lateinit var rootView: View
 
+    protected lateinit var viewModel: VM
 
     private var _binding: VB? = null
 
     protected val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        val method = getViewBindingClass().getMethod(
-            "inflate",
-            LayoutInflater::class.java,
-            ViewGroup::class.java,
-            Boolean::class.java
-        )
-        @Suppress("UNCHECKED_CAST")
-        _binding = method.invoke(null, inflater, container, false) as VB
-        initData()
-        return binding.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        viewModel = if (customViewModel) ViewModelProvider(this, createCustomViewModelIfNeed()!!)[createViewModelClass()] else ViewModelProvider(this)[createViewModelClass()]
+        _binding = createViewBinding(inflater, container)
+        rootView = binding.root
+        initView()
+        return rootView
     }
 
     override fun onDestroyView() {
@@ -48,16 +32,13 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : Fragment() {
         _binding = null
     }
 
+    open fun initView() {}
 
-    open fun initData() {}
+    open fun createCustomViewModelIfNeed(): ViewModelProvider.Factory? = null
 
-    abstract fun getViewModelClass(): KClass<VM>
+    abstract fun createViewModelClass(): Class<VM>
 
-    abstract fun getViewBindingClass(): Class<VB>
-
-    open fun getViewModel(): VM? {
-        return null
-    }
+    abstract fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
 }
 
