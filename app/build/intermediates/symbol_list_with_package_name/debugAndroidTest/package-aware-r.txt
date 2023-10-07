@@ -1,3 +1,0 @@
-app.live.droid.test
-style WhiteBackgroundDialogTheme
-style WhiteBackgroundTheme

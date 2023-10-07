@@ -1,6 +1,0 @@
-app.live.droid.test.app-core-1.5.0-0 C:\Users\YZJ\.gradle\caches\transforms-3\9c4486b4727b88b6ee0f3240550d5065\transformed\core-1.5.0\res
-app.live.droid.test.app-annotation-experimental-1.3.0-1 C:\Users\YZJ\.gradle\caches\transforms-3\c7bfb44621c26b43d47c6eb7d2bf9538\transformed\annotation-experimental-1.3.0\res
-app.live.droid.test.app-androidTest-2 E:\Program\Android\AndroidStudioProjects\Live\app\build\generated\res\resValues\androidTest\debug
-app.live.droid.test.app-mergeDebugAndroidTestResources-3 E:\Program\Android\AndroidStudioProjects\Live\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
-app.live.droid.test.app-mergeDebugAndroidTestResources-4 E:\Program\Android\AndroidStudioProjects\Live\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
-app.live.droid.test.app-merged_res-5 E:\Program\Android\AndroidStudioProjects\Live\app\build\intermediates\merged_res\debugAndroidTest

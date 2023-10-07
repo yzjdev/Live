@@ -1,5 +1,0 @@
-[
-  {"name":"虎牙","className": "app.live.droid.parser.platform.Huya"},
-  {"name":"斗鱼","className": "app.live.droid.parser.platform.Douyu"},
-  {"name":"快手","className": "app.live.droid.parser.platform.Kuaishou"}
-]
