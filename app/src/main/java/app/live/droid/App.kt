@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import app.live.droid.utils.CrashUtils
+import com.drake.statelayout.StateConfig
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -25,6 +26,9 @@ class App : Application() {
         PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_16_9)
 
+        StateConfig.apply {
+            loadingLayout = R.layout.state_loading
+        }
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, _ -> MaterialHeader(context) }
         SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ -> ClassicsFooter(context) }
 

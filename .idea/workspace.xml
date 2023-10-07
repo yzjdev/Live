@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_player.xml">
+        <config>
+          <night>night</night>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/custom_exo_layout.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_category.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_focus.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_history.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_recommend.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_settings.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_category.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_category_child.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/item_live.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/player_view.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/state_loading.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/video_layout_standard.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/menu/bottom_nav_menu.xml">
+        <config>
+          <dock>appliance</dock>
+          <night>night</night>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/navigation/live_navigation.xml">
+        <config>
+          <theme>@style/Theme.Live</theme>
+        </config>
+      </layout>
+    </layouts>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9a0c3763-66b7-4755-aa88-b56d97669f35" name="Changes" comment="update">
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/live/droid/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/live/droid/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/live/droid/extensions/ext.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/live/droid/extensions/ext.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/live/droid/ui/player/PlayerActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/live/droid/ui/player/PlayerActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/live/droid/ui/recommend/RecommendFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/live/droid/ui/recommend/RecommendFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/live/droid/ui/recommend/RecommendViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/live/droid/ui/recommend/RecommendViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_recommend.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_recommend.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/item_live.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/item_live.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[127.0.0.1:21503]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/app">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Live" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Live" type="f1a62948:ProjectNode" />
+                <item name="app" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Live" type="f1a62948:ProjectNode" />
+                <item name="app" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Live" type="f1a62948:ProjectNode" />
+                <item name="app" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="navigationResourceFile" />
+        <option value="resourceFile" />
+        <option value="Kotlin Data Class" />
+        <option value="layoutResourceFile_vertical" />
+        <option value="Kotlin Interface" />
+        <option value="Class" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Object" />
+        <option value="Kotlin Class" />
+        <option value="layoutResourceFile" />
+      </list>
+    </option>
+  </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="E:\Program\Android\keys\appkeys.jks" />
+    <option name="KEY_ALIAS" value="key0" />
+    <option name="REMEMBER_PASSWORDS" value="true" />
+    <option name="BUILD_TARGET_KEY" value="apk" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/Google/AndroidStudioPreview2023.1/device-explorer/Asus ASUS_I005DA/_/data/data/app.live.droid/shared_prefs/huya.xml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Google/AndroidStudioPreview2023.1/device-explorer/Asus ASUS_I005DA/_/storage/emulated/0/Android/data/app.live.droid/files/ql_crash_log/CrashLog-2023-09-20-02-44-51.txt" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/AppData/Local/Google/AndroidStudioPreview2023.1/device-explorer/Xiaomi 2211133C/_/data/data/app.live.droid/shared_prefs/app.live.droid.parser.platform.Huya@33ef3e8.xml" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/AppData/Local/Google/AndroidStudioPreview2023.1/device-explorer/Xiaomi 2211133C/_/data/data/app.live.droid/shared_prefs/douyu.xml" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/AppData/Local/Google/AndroidStudioPreview2023.1/device-explorer/Xiaomi 2211133C/_/data/data/app.live.droid/shared_prefs/huya.xml" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/AppData/Local/Google/AndroidStudioPreview2023.1/device-explorer/Xiaomi 2211133C/_/data/data/app.live.droid/shared_prefs/kuaishou.xml" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="KotlinCodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2UTp5qJApMCfw0e3O0lcdlk1I8N" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ApkExportedModule": "Live.app",
+    "ExportApk.ApkPathForLive.app": "E:\\Program\\Android\\AndroidStudioProjects\\Live\\app",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "android-custom-viewC:/Users/YZJ/.gradle/caches/modules-2/files-2.1/androidx.media3/media3-ui/1.1.1/d4bed467788195981e244b32ae85cd7ce39131c3/media3-ui-1.1.1-sources.jar!/androidx/media3/ui/PlayerView.java_SELECTED": "PlayerView",
+    "android-custom-viewC:/Users/YZJ/.gradle/caches/modules-2/files-2.1/com.github.CarGuo.GSYVideoPlayer/gsyVideoPlayer-java/v8.4.0-release-jitpack/bbc0974aaecafe43328359756263e51a98328f9f/gsyVideoPlayer-java-v8.4.0-release-jitpack-sources.jar!/com/shuyu/gsyvideoplayer/video/StandardGSYVideoPlayer.java_SELECTED": "StandardGSYVideoPlayer",
+    "android-custom-viewC:/Users/YZJ/.gradle/caches/modules-2/files-2.1/com.github.CarGuo.GSYVideoPlayer/gsyVideoPlayer-java/v8.4.0-release-jitpack/bbc0974aaecafe43328359756263e51a98328f9f/gsyVideoPlayer-java-v8.4.0-release-jitpack-sources.jar!/com/shuyu/gsyvideoplayer/video/base/GSYVideoControlView.java_SELECTED": "GSYVideoControlView",
+    "android-custom-viewC:/Users/YZJ/.gradle/caches/modules-2/files-2.1/com.google.android.material/material/1.9.0/8ad443d2a33a5bbdf4210e3964cf79cc5021f12a/material-1.9.0-sources.jar!/com/google/android/material/textfield/TextInputEditText.java_SELECTED": "TextInputEditText",
+    "android-custom-viewC:/Users/YZJ/.gradle/caches/modules-2/files-2.1/com.google.android.material/material/1.9.0/8ad443d2a33a5bbdf4210e3964cf79cc5021f12a/material-1.9.0-sources.jar!/com/google/android/material/textfield/TextInputLayout.java_SELECTED": "TextInputLayout",
+    "android-custom-viewC:/Users/YZJ/.gradle/caches/modules-2/files-2.1/io.github.scwang90/refresh-layout-kernel/2.0.5/234f31c9b6c597617fd717ef8e60f6a75609e661/refresh-layout-kernel-2.0.5-sources.jar!/com/scwang/smart/refresh/layout/SmartRefreshLayout.java_SELECTED": "SmartRefreshLayout",
+    "android-custom-viewE:/Program/Android/AndroidStudioProjects/Live/app/src/main/java/app/live/droid/component/PlayerView.kt_SELECTED": "PlayerView",
+    "android-custom-viewE:/Program/Android/AndroidStudioProjects/Live/app/src/main/java/app/live/droid/components/PlayerView.kt_SELECTED": "PlayerView",
+    "android-custom-viewE:/Program/Android/AndroidStudioProjects/Live/app/src/main/java/app/live/droid/components/fab/Label.kt_SELECTED": "Label",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "E:/Program/Android/AndroidStudioProjects/MyApplication3",
+    "project.structure.last.edited": "Dependencies",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "show.do.not.copy.http.proxy.settings.to.gradle": "false"
+  },
+  "keyToStringList": {
+    "ExportApk.BuildVariants": [
+      "release"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Program\Android\AndroidStudioProjects\Live\app\src\main\res" />
+      <recent name="E:\Program\Android\AndroidStudioProjects\Live\app\src\main\res\drawable" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Program\Android\AndroidStudioProjects\Live\app\src\main\res\drawable" />
+      <recent name="E:\Program\Android\AndroidStudioProjects\Live\app\src\main\java\app\live\droid\extensions" />
+      <recent name="E:\Program\Android\AndroidStudioProjects\Live\app\src\main\java\app\live\droid\logic\network" />
+      <recent name="E:\Program\Android\AndroidStudioProjects\Live\app\src\main\java\app\live\droid\logic\network\douyu" />
+    </key>
+    <key name="android.template.1256825971">
+      <recent name="app.live.droid.ui.recommend" />
+      <recent name="app.live.droid.ui" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="app.live.droid.base" />
+      <recent name="app.live.droid" />
+      <recent name="app.live.droid.ui.player" />
+      <recent name="app.live.droid.ui.home" />
+    </key>
+    <key name="android.template.484352723">
+      <recent name="app.live.droid" />
+    </key>
+    <key name="android.template.-449141259">
+      <recent name="app.live.droid.ui.settings" />
+      <recent name="app.live.droid.ui.history" />
+      <recent name="app.live.droid.ui.focus" />
+      <recent name="app.live.droid.ui.category" />
+      <recent name="app.live.droid.ui" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Android App.app">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
+      <module name="Live.app.main" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HuyaNetworkKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="app.live.droid.logic.network.HuyaNetworkKt" />
+      <module name="Live.app.main" />
+      <shortenClasspath name="ARGS_FILE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="KuaishouNetworkKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="app.live.droid.logic.network.kuaishou.KuaishouNetworkKt" />
+      <module name="Live.app.main" />
+      <shortenClasspath name="ARGS_FILE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LiveNetworkKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="app.live.droid.logic.network.LiveNetworkKt" />
+      <module name="Live.app.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RepositoryKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="app.live.droid.logic.RepositoryKt" />
+      <module name="Live.app.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="app.live.droid.TestKt" />
+      <module name="Live.app.main" />
+      <shortenClasspath name="ARGS_FILE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Live" />
+      <shortenClasspath name="ARGS_FILE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Kotlin.HuyaNetworkKt" />
+        <item itemvalue="Kotlin.KuaishouNetworkKt" />
+        <item itemvalue="Kotlin.TestKt" />
+        <item itemvalue="Kotlin.RepositoryKt" />
+        <item itemvalue="Kotlin.LiveNetworkKt" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\YZJ\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9a0c3763-66b7-4755-aa88-b56d97669f35" name="Changes" comment="" />
+      <created>1692973244479</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1692973244479</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.mozilla.javascript.EvaluatorException" package="org.mozilla.javascript" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

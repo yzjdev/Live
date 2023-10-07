@@ -1,0 +1,38 @@
+{
+    "logs": [
+        {
+            "outputFile": "app.live.droid.app-mergeReleaseResources-70:/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\YZJ\\.gradle\\caches\\transforms-3\\624f6d303ceeccaeebbbc35dbcbc1dab\\transformed\\core-1.10.1\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\YZJ\\.gradle\\caches\\transforms-3\\d178e6502a3c015bf1153fd3f00e0f10\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "121",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "289"
+                    }
+                }
+            ]
+        }
+    ]
+}

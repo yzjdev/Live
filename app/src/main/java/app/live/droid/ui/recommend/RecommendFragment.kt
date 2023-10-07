@@ -14,8 +14,9 @@ import app.live.droid.R
 import app.live.droid.base.BaseFragment
 import app.live.droid.databinding.FragmentRecommendBinding
 import app.live.droid.databinding.ItemLiveBinding
-import app.live.droid.extensions.gson
+import app.live.droid.extensions.isFastClick
 import app.live.droid.extensions.loadUrl
+import app.live.droid.extensions.toast
 import app.live.droid.logic.model.LiveBean
 import app.live.droid.parser.LiveParser
 import app.live.droid.parser.platform.Douyu
@@ -23,14 +24,12 @@ import app.live.droid.parser.platform.Huya
 import app.live.droid.parser.platform.Kuaishou
 import app.live.droid.ui.player.PlayerActivity
 import com.alibaba.fastjson2.JSON
-import com.drake.brv.PageRefreshLayout
 import com.drake.brv.utils.models
 import com.drake.brv.utils.setup
-import com.google.gson.reflect.TypeToken
 import kotlin.math.abs
 
 
-class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseFragment<FragmentRecommendBinding, RecommendViewModel>(true) {
+class RecommendFragment constructor(private val liveParser: LiveParser) : BaseFragment<FragmentRecommendBinding, RecommendViewModel>(true) {
 
     private val routeName = when (liveParser) {
         is Huya -> "huya"
@@ -39,13 +38,16 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseF
         else -> ""
     }
 
+    val scrollOffset = 4
+
+    private var flagForceRefresh = false
     private var page = 1
 
-    val mapName = "${routeName}_$page"
+    private val mapName get() = "${routeName}_$page"
 
     val map = mutableMapOf<LiveParser, String>()
 
-    override fun createCustomViewModelIfNeed() = RecommendViewModelFactory(liveParser!!)
+    override fun createCustomViewModelIfNeed() = RecommendViewModelFactory(liveParser)
 
     override fun createViewModelClass() = RecommendViewModel::class.java
 
@@ -53,16 +55,26 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseF
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bindRv()
-        binding.forceRefresh.setOnClickListener { refresh() }
 
+        viewModel.getLives(1)
         viewModel.liveLiveData.observe(viewLifecycleOwner, Observer { result ->
             val lives = result.getOrNull()
             if (lives != null) {
+                if (flagForceRefresh) {
+                    flagForceRefresh = false
+                    binding.page.showContent()
+                    viewModel.liveListMap.clear()
+                }
                 viewModel.liveListMap[mapName] = lives
-                val hint = "正在直播 ${binding.rv.models?.size}"
-                map[liveParser!!] = hint
+                //刷新列表数据
+                binding.rv.models = getData()
 
+                //更新搜索框提示
+                val hint = "正在直播 ${binding.rv.models?.size}"
+                binding.search.hint = hint
+                map[liveParser] = hint
+
+                //保存至本地
                 val json = JSON.toJSONString(lives)
                 activity?.apply {
                     val editor = getSharedPreferences(routeName, Context.MODE_PRIVATE).edit()
@@ -71,48 +83,50 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseF
                 }
             }
         })
-    }
 
-    val scrollOffset = 4
-    private fun bindRv() {
-        binding.rv.setHasFixedSize(true)
-        binding.rv.layoutManager = GridLayoutManager(activity, 2)
-        binding.rv.setup {
-            addType<LiveBean>(app.live.droid.R.layout.item_live)
-            onBind {
-                val b = getBinding<ItemLiveBinding>()
-                val screenWidth = resources.displayMetrics.widthPixels / 2 - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
-                val targetHeight = screenWidth * 95 / 169f
-                b.preview.layoutParams.height = targetHeight.toInt()
 
-                val data = getModel<LiveBean>()
-                b.apply {
-                    room.text = data.name
-                    title.text = data.title
-                    game.text = data.gameName
-                    avatar.loadUrl(data.avatar)
-                    preview.loadUrl(data.coverUrl)
-                    num.text = data.num
-                }
-
-                itemView.setOnClickListener { PlayerActivity.actionStart(requireContext(), liveParser!!, data) }
+        binding.pageGoto.setOnClickListener {
+            if (!isFastClick()) {
+                page++
+                viewModel.getLives(page)
+            } else {
+                "点这么快干嘛！！".toast()
             }
+
         }
 
-        val fab = binding.fab
+        binding.page.onRefresh {
+            page = index
+            postDelayed({
+                viewModel.getLives(page)
+                addData(getData()){
+                    true
+                }
+            }, 1000)
+        }.autoRefresh()
 
+        binding.forceRefresh.setOnClickListener {
+            flagForceRefresh = true
+            binding.page.showLoading()
+            binding.rv.scrollToPosition(0)
+            binding.fabTop.hide()
+            requireActivity().getSharedPreferences(routeName, Context.MODE_PRIVATE).edit().clear().apply()
+            page = 1
+            viewModel.getLives(page)
+
+        }
         binding.search.doAfterTextChanged {
             val s = it.toString()
             query(s)
         }
 
+        val fab = binding.fabTop
         fab.setOnClickListener {
             val rv = activity?.findViewById<RecyclerView>(R.id.rv)
             rv?.scrollToPosition(0)
             fab.hide()
         }
         fab.hide()
-
 
         binding.rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -127,55 +141,51 @@ class RecommendFragment constructor(private val liveParser: LiveParser?) : BaseF
             }
         })
 
-        binding.page.onRefresh {
-            page = index
-            val data = getData(page)
-            addData(data) {
-                data.isNotEmpty()
+        binding.rv.setHasFixedSize(true)
+        binding.rv.layoutManager = GridLayoutManager(activity, 2)
+        binding.rv.setup {
+            addType<LiveBean>(app.live.droid.R.layout.item_live)
+            onBind {
+                val b = getBinding<ItemLiveBinding>()
+                val screenWidth = resources.displayMetrics.widthPixels / 2 - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
+                val targetHeight = screenWidth * 95 / 169f
+                b.preview.layoutParams.height = targetHeight.toInt()
+
+                val data = getModel<LiveBean>()
+                b.apply {
+                    room.text = "${modelPosition+1} ${data.name}"
+                    title.text = data.title
+                    game.text = data.gameName
+                    avatar.loadUrl(data.avatar)
+                    preview.loadUrl(data.coverUrl)
+                    num.text = data.num
+                }
+
+                itemView.setOnClickListener { PlayerActivity.actionStart(requireContext(), liveParser, data) }
             }
-
-        }.autoRefresh()
-
-    }
-
-    private fun refresh() {
-        clearCache()
-        PageRefreshLayout.startIndex = 1
-        binding.page.autoRefresh()
-    }
-
-    private fun clearCache() {
-        activity?.apply {
-            getSharedPreferences(routeName, Context.MODE_PRIVATE).edit().clear().apply()
         }
+
+
     }
 
-    fun getData(page: Int): List<LiveBean> {
-        activity?.apply {
-            getSharedPreferences(routeName, Context.MODE_PRIVATE).apply {
-                val json = getString("$page", "")
-                val l = gson.fromJson<List<LiveBean>>(json, object : TypeToken<MutableList<LiveBean>>() {}.type)
-                if (!l.isNullOrEmpty()) {
-                    return l
+    fun getData() = viewModel.liveListMap.run {
+        val list = ArrayList<LiveBean>()
+        forEach { (_, u) -> list.addAll(u) }
+        list
+    }
+
+    fun getData(page: Int) = viewModel.liveListMap["${routeName}_$page"]
+    fun query(s: String) {
+        getData().apply {
+            binding.rv.models = this.filter { v ->
+                when {
+                    s.isBlank() -> true
+                    else -> v.gameName.contains(s, true) ||
+                            v.title.contains(s, true) ||
+                            v.name.contains(s, true)
                 }
             }
         }
-
-        return mutableListOf()
-    }
-
-    fun query(query: String) {
-//
-//        binding.rv.models =list.filter {
-//            val v = it as LiveBean
-//            when {
-//                query.isBlank() -> true
-//                else -> v.gameName.contains(query, true) ||
-//                        v.title.contains(query, true) ||
-//                        v.name.contains(query, true)
-//            }
-//
-//        }
     }
 
 }

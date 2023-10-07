@@ -1,0 +1,66 @@
+[
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\fragment_focus.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\fragment_focus.xml"
+    },
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\fragment_category.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\fragment_category.xml"
+    },
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\item_category_child.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\item_category_child.xml"
+    },
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\item_live.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\item_live.xml"
+    },
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\fragment_recommend.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\fragment_recommend.xml"
+    },
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\item_category.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\item_category.xml"
+    },
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\fragment_history.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\fragment_history.xml"
+    },
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\fragment_home.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\fragment_home.xml"
+    },
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\player_view.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\player_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\custom_exo_layout.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\custom_exo_layout.xml"
+    },
+    {
+        "merged": "app.live.droid.app-mergeDebugResources-71:/layout/item_live.xml",
+        "source": "app.live.droid.app-main-74:/layout/item_live.xml"
+    },
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\fragment_settings.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\fragment_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\state_loading.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\state_loading.xml"
+    },
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\video_layout_standard.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\video_layout_standard.xml"
+    },
+    {
+        "merged": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-mergeDebugResources-71:\\layout\\activity_player.xml",
+        "source": "C:\\Users\\YZJ\\.gradle\\daemon\\8.2\\app.live.droid.app-main-74:\\layout\\activity_player.xml"
+    }
+]

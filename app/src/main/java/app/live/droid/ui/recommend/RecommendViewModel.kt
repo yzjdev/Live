@@ -8,13 +8,11 @@ import app.live.droid.parser.LiveParser
 
 class RecommendViewModel(parser: LiveParser): ViewModel() {
 
-
     private val pageLiveData = MutableLiveData<Int>()
 
     var liveListMap = HashMap<String, List<LiveBean>>()
 
     val liveLiveData = pageLiveData.switchMap { page -> parser.getLives(page) }
-
 
     fun getLives(page:Int){
         pageLiveData.value = page

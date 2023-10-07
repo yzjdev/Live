@@ -48,10 +48,11 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding, PlayerViewModel>(true
     override fun createViewBinding() = ActivityPlayerBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
         parser = intent.getSerializableExtra("parser") as LiveParser
         data = intent.getSerializableExtra("data") as LiveBean
+
+        super.onCreate(savedInstanceState)
 
         initPlayer()
 

@@ -13,8 +13,8 @@ import com.google.gson.Gson
 @SuppressLint("StaticFieldLeak")
 val context = App.context
 var gson = Gson().create()
-val TAG = "LiveLog"
-
+const val TAG = "LiveLog"
+val time get() = System.currentTimeMillis()
 
 fun Any?.toast(context: Context) {
     Handler(Looper.getMainLooper()).post {
@@ -40,3 +40,17 @@ val Any?.dp: Int
             is Float -> TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this as Float, context.resources.displayMetrics).toInt()
             else -> 0
         }
+
+
+private const val FAST_CLICK_DELAY_TIME = 1000
+private var lastClickTime: Long = 0
+
+fun isFastClick(): Boolean {
+    var flag = true
+    val currentClickTime = System.currentTimeMillis()
+    if (currentClickTime - lastClickTime >= FAST_CLICK_DELAY_TIME) {
+        flag = false
+    }
+    lastClickTime = currentClickTime
+    return flag
+}
