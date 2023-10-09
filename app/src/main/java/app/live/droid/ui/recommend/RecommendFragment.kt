@@ -23,9 +23,9 @@ import app.live.droid.parser.platform.Douyu
 import app.live.droid.parser.platform.Huya
 import app.live.droid.parser.platform.Kuaishou
 import app.live.droid.ui.player.PlayerActivity
-import com.alibaba.fastjson2.JSON
 import com.drake.brv.utils.models
 import com.drake.brv.utils.setup
+import com.google.gson.Gson
 import kotlin.math.abs
 
 
@@ -75,7 +75,7 @@ class RecommendFragment constructor(private val liveParser: LiveParser) : BaseFr
                 map[liveParser] = hint
 
                 //保存至本地
-                val json = JSON.toJSONString(lives)
+                val json = Gson().toJson(lives)
                 activity?.apply {
                     val editor = getSharedPreferences(routeName, Context.MODE_PRIVATE).edit()
                     editor.putString("$page", json)
@@ -97,12 +97,10 @@ class RecommendFragment constructor(private val liveParser: LiveParser) : BaseFr
 
         binding.page.onRefresh {
             page = index
-            postDelayed({
-                viewModel.getLives(page)
-                addData(getData()){
-                    true
-                }
-            }, 1000)
+            viewModel.getLives(page)
+            addData(getData()){
+                true
+            }
         }.autoRefresh()
 
         binding.forceRefresh.setOnClickListener {

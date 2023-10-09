@@ -6,6 +6,10 @@ import app.live.droid.extensions.TAG
 import app.live.droid.extensions.UA_MOBILE
 import app.live.droid.extensions.UA_NAME
 import app.live.droid.extensions.UA_PC
+import app.live.droid.extensions.gson.getJsonArray
+import app.live.droid.extensions.gson.getJsonObject
+import app.live.droid.extensions.gson.getString
+import app.live.droid.extensions.parseObject
 import app.live.droid.logic.model.LiveBean
 import app.live.droid.logic.model.Rate
 import app.live.droid.logic.model.StreamBean
@@ -18,7 +22,6 @@ import cn.hutool.http.HttpRequest
 import cn.hutool.http.HttpUtil
 import cn.hutool.json.JSONObject
 import cn.hutool.json.JSONUtil
-import com.alibaba.fastjson2.parseObject
 import kotlinx.coroutines.Dispatchers
 import java.util.regex.Pattern
 import kotlin.properties.Delegates
@@ -43,7 +46,7 @@ object DouyuNetwork {
         val result = try {
             val url = "https://www.douyu.com/gapi/rkc/directory/mixList/0_0/$page"
             val json = HttpRequest.get(url).header(UA_NAME, UA_PC).execute().body()
-            val arr =json.parseObject().getJSONObject("data").getJSONArray("rl")
+            val arr =json.parseObject().getJsonObject("data").getJsonArray("rl")
             arr.forEach { e ->
                 e.toString().parseObject().apply {
                     val roomId = getString("url").substring(1)

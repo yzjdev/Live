@@ -4,6 +4,11 @@ import androidx.lifecycle.liveData
 import app.live.droid.extensions.UA_MOBILE
 import app.live.droid.extensions.UA_NAME
 import app.live.droid.extensions.UA_PC
+import app.live.droid.extensions.gson.getInt
+import app.live.droid.extensions.gson.getJsonArray
+import app.live.droid.extensions.gson.getJsonObject
+import app.live.droid.extensions.gson.getString
+import app.live.droid.extensions.parseObject
 import app.live.droid.logic.model.LiveBean
 import app.live.droid.logic.model.Rate
 import app.live.droid.logic.model.StreamBean
@@ -13,9 +18,6 @@ import cn.hutool.core.util.CharsetUtil
 import cn.hutool.core.util.NumberUtil
 import cn.hutool.crypto.digest.MD5
 import cn.hutool.http.HttpRequest
-import com.alibaba.fastjson2.JSON
-import com.alibaba.fastjson2.parseObject
-import com.alibaba.fastjson2.toJSONString
 import kotlinx.coroutines.Dispatchers
 import java.util.regex.Pattern
 
@@ -40,12 +42,12 @@ object HuyaNetwork {
             val list = ArrayList<LiveBean>()
             val url = "https://live.huya.com/liveHttpUI/getLiveList?iGid=0&iPageSize=120&iPageNo=$page"
             val json = HttpRequest.get(url).header(UA_NAME, UA_PC).execute().body()
-            val hasMore = JSON.parseObject(json).run {
-                val a = getIntValue("iPageNo")
-                val b = getIntValue("iTotalPage")
+            val hasMore = json.parseObject().run {
+                val a = getInt("iPageNo")
+                val b = getInt("iTotalPage")
                 a < b
             }
-            val arr = json.parseObject().getJSONArray("vList")
+            val arr = json.parseObject().getJsonArray("vList")
 
             arr.forEach { e ->
                 e.toString().parseObject().apply {
@@ -92,16 +94,16 @@ class HuYa {
 
     fun live(info: String): StreamBean {
         val uid = getAnonymousUID()
-        val rate = info.parseObject().getJSONObject("roomInfo").getJSONObject("tLiveInfo")
-            .getIntValue("iBitRate")
-        info.parseObject().getJSONObject("roomInfo")
-            .getJSONObject("tLiveInfo").getJSONObject("tLiveStreamInfo").apply {
-                val streamArr = getJSONObject("vStreamInfo").getJSONArray("value")
-                val rateArr = getJSONObject("vBitRateInfo").getJSONArray("value")
+        val rate = info.parseObject().getJsonObject("roomInfo").getJsonObject("tLiveInfo")
+            .getInt("iBitRate")
+        info.parseObject().getJsonObject("roomInfo")
+            .getJsonObject("tLiveInfo").getAsJsonObject("tLiveStreamInfo").apply {
+                val streamArr = getJsonObject("vStreamInfo").getJsonArray("value")
+                val rateArr = getJsonObject("vBitRateInfo").getJsonArray("value")
 
                 val urls = arrayListOf<String>()
                 streamArr.forEach { item ->
-                    item.toJSONString().parseObject().apply {
+                    item.toString().parseObject().apply {
                         val streamName = getString("sStreamName")
 
                         val flvUrl = String.format(
@@ -128,7 +130,7 @@ class HuYa {
                         rates.add(
                             Rate(
                                 getString("sDisplayName"),
-                                getIntValue("iBitRate")
+                                getInt("iBitRate")
                             )
                         )
                     }
@@ -171,7 +173,7 @@ class HuYa {
                 "application/json;charset=utf-8"
             ).execute().body()
 
-        return res.parseObject().getJSONObject("data").getString("uid")
+        return res.parseObject().getJsonObject("data").getString("uid")
     }
 
     fun getUUID(): String {

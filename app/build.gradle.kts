@@ -40,18 +40,23 @@ android {
 }
 
 dependencies {
-    implementation("com.github.clans:fab:1.6.4")
-    
-    implementation ("com.google.code.gson:gson:2.10.1")
-    implementation("com.alibaba.fastjson2:fastjson2-kotlin:2.0.40")
-    implementation ("org.mozilla:rhino:1.7.13")
+    //json解析库
+    implementation("com.google.code.gson:gson:2.10.1")
+    //js脚本执行引擎
+    implementation("org.mozilla:rhino:1.7.13")
+    //html解析库
     implementation("org.jsoup:jsoup:1.16.1")
-    implementation ("com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-java:v8.4.0-release-jitpack")
-    implementation ("com.github.CarGuo.GSYVideoPlayer:GSYVideoPlayer-exo2:v8.4.0-release-jitpack")
 
+    //视频播放器
+    implementation("com.github.CarGuo.GSYVideoPlayer:gsyVideoPlayer-java:v8.4.0-release-jitpack")
+    implementation("com.github.CarGuo.GSYVideoPlayer:GSYVideoPlayer-exo2:v8.4.0-release-jitpack")
+
+    //常用工具类
     implementation("cn.hutool:hutool-all:5.8.21")
 
+    //图片加载库
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
     implementation("com.google.android.flexbox:flexbox:3.0.0")
@@ -64,7 +69,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
-    implementation ("androidx.media3:media3-ui:1.1.1")
+    implementation("androidx.media3:media3-ui:1.1.1")
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
