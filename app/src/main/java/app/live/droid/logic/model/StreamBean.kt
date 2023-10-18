@@ -1,6 +1,6 @@
 package app.live.droid.logic.model
 
-data class StreamBean(val urls:List<String>, val rate:Int,  val rates:List<Rate>){
+data class StreamBean(val urls:List<String>, val rates:List<Rate>){
     fun toNewString(): String {
         val sb = StringBuilder()
         urls.forEach { item ->
@@ -13,5 +13,5 @@ data class StreamBean(val urls:List<String>, val rate:Int,  val rates:List<Rate>
     }
 }
 
-data class Rate(val name:String, val rate:Int)
+data class Rate(val name:String, val rate:Int, val default:Boolean = false)
 

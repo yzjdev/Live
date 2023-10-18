@@ -6,7 +6,9 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import app.live.droid.base.BaseActivity
+import app.live.droid.components.PlayerView
 import app.live.droid.databinding.ActivityPlayerBinding
+import app.live.droid.extensions.logDebug
 import app.live.droid.extensions.toast
 import app.live.droid.logic.model.LiveBean
 import app.live.droid.parser.LiveParser
@@ -14,7 +16,6 @@ import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer
 
 
@@ -34,7 +35,7 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding, PlayerViewModel>(true
 
     lateinit var currentUrl: String
 
-    lateinit var playerView: StandardGSYVideoPlayer
+    lateinit var playerView: PlayerView
 
     lateinit var orientationUtils: OrientationUtils
 
@@ -51,31 +52,58 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding, PlayerViewModel>(true
 
         parser = intent.getSerializableExtra("parser") as LiveParser
         data = intent.getSerializableExtra("data") as LiveBean
-
         super.onCreate(savedInstanceState)
 
+
+        "MainActivity is create !".logDebug()
+
+        initData()
         initPlayer()
 
+    }
+
+    fun initData(){
         viewModel.getStream(data.roomId)
         viewModel.streamLiveData.observe(this, Observer { result ->
             val stream = result.getOrNull()!!
-            viewModel.stream = stream
+            binding.text.text = stream.toNewString()
             data.stream = stream
-            if (stream.urls.isNotEmpty()){
+            viewModel.setA(data)
+            _onDataChangedListener?.onChanged(data)
+
+            val defaultRates = stream.rates.filter { v -> v.default }
+            if (defaultRates.isNotEmpty()){
+                // playerView.defaultRate = defaultRates[0]
+            }
+
+            if (stream.urls.isNotEmpty()) {
                 startPlay(stream.urls[0])
-            }else{
+            } else {
                 "播放地址出错".toast()
             }
         })
+
     }
 
-    fun initPlayer() {
+    interface OnDataChangedListener{
+        fun onChanged(data:LiveBean)
+    }
+
+    private var _onDataChangedListener:OnDataChangedListener? = null
+    fun setOnDataChangedListener(listener:OnDataChangedListener){
+        _onDataChangedListener = listener
+    }
+
+    fun getViewModel() = viewModel
+
+    private fun initPlayer() {
 
         playerView = binding.playerView
+        lifecycle.addObserver(playerView)
         orientationUtils = OrientationUtils(this, playerView)
 
         GSYVideoOptionBuilder().apply {
-            setTitle(data.title)
+            title = data.title
             setShowDragProgressTextOnSeekBar(false)
             setShowFullAnimation(false)
             setVideoAllCallBack(object : GSYSampleCallBack() {
@@ -87,6 +115,13 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding, PlayerViewModel>(true
                 override fun onQuitFullscreen(url: String?, vararg objects: Any?) {
                     super.onQuitFullscreen(url, *objects)
                     orientationUtils.backToProtVideo()
+                }
+
+                override fun onComplete(url: String?, vararg objects: Any?) {
+                    super.onComplete(url, *objects)
+                    if (url != null) {
+                        startPlay(url)
+                    }
                 }
             })
 
@@ -108,25 +143,37 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding, PlayerViewModel>(true
     override fun onBackPressed() {
         // ------- ！！！如果不需要旋转屏幕，可以不调用！！！-------
         // 不需要屏幕旋转，还需要设置 setNeedOrientationUtils(false)
-        if (orientationUtils != null) {
-            orientationUtils.backToProtVideo()
-        }
+        orientationUtils.backToProtVideo()
         if (GSYVideoManager.backFromWindowFull(this)) {
             return
         }
         super.onBackPressed()
     }
 
-    override fun onPause() {
-        getCurPlay().onVideoPause()
-        super.onPause()
-        isPause = true
-    }
 
+    override fun onStart() {
+        super.onStart()
+        "MainActivity is start !".logDebug()
+    }
     override fun onResume() {
         getCurPlay().onVideoResume()
         super.onResume()
         isPause = false
+        "MainActivity is resume !".logDebug()
+
+    }
+
+    override fun onPause() {
+        getCurPlay().onVideoPause()
+        super.onPause()
+        isPause = true
+        "MainActivity is pause !".logDebug()
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        "MainActivity is stop !".logDebug()
     }
 
     override fun onDestroy() {
@@ -135,12 +182,21 @@ class PlayerActivity : BaseActivity<ActivityPlayerBinding, PlayerViewModel>(true
             getCurPlay().release()
         }
         orientationUtils.releaseListener()
+        "MainActivity is destroy !".logDebug()
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        "MainActivity is restart !".logDebug()
+    }
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         if (isPlay && !isPause)
             playerView.onConfigurationChanged(this, newConfig, orientationUtils, true, true)
+
+
+        _onDataChangedListener?.onChanged(data)
+
     }
 
     fun getCurPlay(): GSYVideoPlayer {

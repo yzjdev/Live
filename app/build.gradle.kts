@@ -40,6 +40,9 @@ android {
 }
 
 dependencies {
+    implementation ("com.github.zawadz88.materialpopupmenu:material-popup-menu:4.1.0")
+
+    implementation ("com.github.li-xiaojun:XPopup:2.9.19")
     //json解析库
     implementation("com.google.code.gson:gson:2.10.1")
     //js脚本执行引擎
@@ -69,7 +72,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
-    implementation("androidx.media3:media3-ui:1.1.1")
+    //implementation("androidx.media3:media3-ui:1.1.1")
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)

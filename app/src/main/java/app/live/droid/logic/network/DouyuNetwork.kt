@@ -129,14 +129,16 @@ class DouYu(val room: String) {
 
         dataObj.apply {
             val url = getStr("url")
-            val rate = getInt("rate")
+           // val rate = getInt("rate")
             val rates = ArrayList<Rate>()
             getJSONArray("settings").forEach {
                 val o = it as JSONObject
-                val rate = Rate(o.getStr("name"), o.getInt("rate"))
+                val r = o.getInt("rate")
+                val rate = Rate(o.getStr("name"), r, r==2)
                 rates.add(rate)
             }
-            return StreamBean(arrayListOf(url), rate, rates)
+            rates.reverse()
+            return StreamBean(arrayListOf(url), rates)
 
         }
     }

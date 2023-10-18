@@ -30,6 +30,11 @@ fun Any?.logDebug(head: String = "") {
     Log.d(TAG, "head: $this")
 }
 
+
+fun Any?.isNull(){
+    (this == null).toast()
+}
+
 val Any?.dp: Int
     get() = when (this) {
             is Int,
@@ -52,3 +57,4 @@ fun isFastClick(): Boolean {
     lastClickTime = currentClickTime
     return flag
 }
+

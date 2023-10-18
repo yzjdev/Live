@@ -86,12 +86,13 @@ class KuaiShou {
                                         CharsetUtil.CHARSET_UTF_8
                                     )
                                 )
-                                rates.add(Rate(getString("name"), getInt("bitrate")))
+                                val r = getInt("bitrate")
+                                rates.add(Rate(getString("name"),r, r==1000))
                             }
                         }
 
                 }
             }
-        return StreamBean(urls, 0, rates)
+        return StreamBean(urls, rates)
     }
 }

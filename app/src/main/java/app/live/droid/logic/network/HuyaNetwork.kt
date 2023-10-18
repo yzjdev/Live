@@ -94,8 +94,8 @@ class HuYa {
 
     fun live(info: String): StreamBean {
         val uid = getAnonymousUID()
-        val rate = info.parseObject().getJsonObject("roomInfo").getJsonObject("tLiveInfo")
-            .getInt("iBitRate")
+        //defaultRate
+        //val rate = 500//info.parseObject().getJsonObject("roomInfo").getJsonObject("tLiveInfo").getInt("iBitRate")
         info.parseObject().getJsonObject("roomInfo")
             .getJsonObject("tLiveInfo").getAsJsonObject("tLiveStreamInfo").apply {
                 val streamArr = getJsonObject("vStreamInfo").getJsonArray("value")
@@ -105,21 +105,13 @@ class HuYa {
                 streamArr.forEach { item ->
                     item.toString().parseObject().apply {
                         val streamName = getString("sStreamName")
-
                         val flvUrl = String.format(
-                            "%s/%s.%s?%s", getString("sFlvUrl"),
+                            "%s/%s.%s?%s",
+                            getString("sFlvUrl"),
                             streamName,
                             getString("sFlvUrlSuffix"),
                             processAntiCode(getString("sFlvAntiCode"), uid, streamName)
                         )
-                        val hlsUrl = String.format(
-                            "%s/%s.%s?%s",
-                            getString("sHlsUrl"),
-                            streamName,
-                            getString("sHlsUrlSuffix"),
-                            processAntiCode(getString("sHlsAntiCode"), uid, streamName)
-                        )
-                        urls.add(hlsUrl)
                         urls.add(flvUrl)
                     }
                 }
@@ -127,15 +119,14 @@ class HuYa {
                 val rates = arrayListOf<Rate>()
                 rateArr.forEach { item ->
                     item.toString().parseObject().apply {
-                        rates.add(
-                            Rate(
-                                getString("sDisplayName"),
-                                getInt("iBitRate")
-                            )
-                        )
+                        val n = getString("sDisplayName")
+                        val r = getInt("iBitRate")
+                        rates.add(Rate(n,r, r==500))
                     }
                 }
-                return StreamBean(urls, rate, rates)
+                rates.reverse()
+
+                return StreamBean(urls, rates)
             }
     }
 
