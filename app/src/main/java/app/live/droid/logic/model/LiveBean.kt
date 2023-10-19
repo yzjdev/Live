@@ -12,5 +12,6 @@ data class LiveBean(
     val avatar: String,
     val coverUrl: String,
     var stream: StreamBean?,
-    var hasMore:Boolean = false
+    var hasMore:Boolean = false,
+    var defaultRate: Rate? = null
 ) : Serializable

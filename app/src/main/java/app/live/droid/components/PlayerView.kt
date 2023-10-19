@@ -3,9 +3,10 @@ package app.live.droid.components
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
+import android.view.View
+import android.view.View.OnClickListener
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.DefaultLifecycleObserver
 import app.live.droid.R
 import app.live.droid.logic.model.LiveBean
 import app.live.droid.ui.player.PlayerActivity
@@ -13,7 +14,7 @@ import com.github.zawadz88.materialpopupmenu.popupMenu
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 
 
-class PlayerView : StandardGSYVideoPlayer, DefaultLifecycleObserver {
+class PlayerView : StandardGSYVideoPlayer, OnClickListener {
 
     constructor(context: Context, fullFlag: Boolean) : super(context, fullFlag)
 
@@ -22,36 +23,53 @@ class PlayerView : StandardGSYVideoPlayer, DefaultLifecycleObserver {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     lateinit var rateView: TextView
+    lateinit var refreshView:ImageView
 
     private val activity get() = context as PlayerActivity
 
     private lateinit var data: LiveBean
 
     init {
+        initView()
         activity.setOnDataChangedListener(object : PlayerActivity.OnDataChangedListener {
-            override fun onChanged(data: LiveBean) {
+            override fun onChanged(activity: PlayerActivity, data: LiveBean) {
                 this@PlayerView.data = data
-                rateView.text = data.stream?.rates?.get(0)?.name
+                val defaultRate = data.defaultRate
+                if (defaultRate==null){
+                    rateView.text = data.stream?.rates?.get(0)?.name
+                }else{
+                    rateView.text = defaultRate.name
+                }
             }
         })
 
-        rateView = findViewById<TextView>(R.id.rate)
-        backButton.setOnClickListener { activity.finish() }
-        rateView.setOnClickListener {
-            setRateList()
+        backButton.setOnClickListener(this)
+        rateView.setOnClickListener(this)
+    }
+
+    private fun initView(){
+        rateView = findViewById(R.id.rate)
+        refreshView = findViewById(R.id.refresh)
+    }
+
+    override fun onClick(v: View?) {
+        super.onClick(v)
+        when(v){
+            backButton -> activity.finish()
+            rateView -> setRateList()
+            refreshView -> {
+
+            }
         }
     }
 
-
-    fun setRateList() {
-        //  if (data == null) return
+    private fun setRateList() {
         val list = data.stream?.rates
         if (list.isNullOrEmpty()) return
         val popupMenu = popupMenu {
             dropdownGravity = if (mIfCurrentIsFullscreen) Gravity.TOP else Gravity.BOTTOM
             section {
                 list.forEach {
-
                     item {
                         label = it.name
                         //icon = R.drawable.abc_ic_menu_copy_mtrl_am_alpha //optional
@@ -64,16 +82,9 @@ class PlayerView : StandardGSYVideoPlayer, DefaultLifecycleObserver {
             }
         }
         popupMenu.show(context, rateView)
-
     }
 
-    override fun startDismissControlViewTimer() {
-        //super.startDismissControlViewTimer()
-    }
-
-    override fun showWifiDialog() {
-        //super.showWifiDialog()
-    }
+    override fun showWifiDialog() {}
 
     override fun getLayoutId() = R.layout.player_view
 
